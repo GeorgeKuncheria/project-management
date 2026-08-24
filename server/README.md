@@ -127,3 +127,22 @@ SELECT setval(pg_get_serial_sequence('"Project"', 'id'), coalesce(max(id)+1, 1),
 ```
 
 Run the equivalent for any other model hit by the same issue, substituting the table name (e.g. `"Task"`, `"User"`).
+
+## 9. ecosystem.config.js
+
+[`ecosystem.config.js`](./ecosystem.config.js) is a [PM2](https://pm2.keymetrics.io/) process manager config. It defines one app, `project-management`, which PM2 runs via `npm run dev` with `NODE_ENV=development`.
+
+Start it with PM2 instead of running `npm run dev` directly:
+
+```bash
+npx pm2 start ecosystem.config.js
+```
+
+Useful PM2 commands once it's running:
+
+```bash
+npx pm2 list        # show running processes
+npx pm2 logs        # tail logs
+npx pm2 restart project-management
+npx pm2 stop project-management
+```
