@@ -135,7 +135,7 @@ Run the equivalent for any other model hit by the same issue, substituting the t
 Start it with PM2 instead of running `npm run dev` directly:
 
 ```bash
-npx pm2 start ecosystem.config.js
+pm2 start ecosystem.config.js
 ```
 
 Useful PM2 commands once it's running:
