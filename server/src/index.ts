@@ -11,6 +11,7 @@ import taskRoutes from '../src/routes/taskRoutes';
 import searchRoutes from '../src/routes/searchRoutes';
 import userRoutes from '../src/routes/userRoutes';
 import teamRoutes from '../src/routes/teamRoutes';
+import { ensureIndices } from './search/indices';
 // CONFIGURATIONS
 dotenv.config();
 const app=express();
@@ -39,5 +40,6 @@ app.use('/teams',teamRoutes);
 const port = Number(process.env.PORT) || 3000;
 app.listen(port,"0.0.0.0" ,()=>{
     console.log(`Server running on port ${port}`)
+    ensureIndices().catch((e)=>console.warn(`Elasticsearch unavailable, search will use Postgres fallback: ${e.message}`));
 })
 

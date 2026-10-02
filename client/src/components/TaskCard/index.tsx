@@ -2,12 +2,14 @@ import { Task } from '@/state/api'
 import { format } from 'date-fns';
 import Image from 'next/image';
 import React from 'react'
+import Highlight from '@/components/Highlight'
 
 type Props = {
     task:Task;
+    highlights?: Record<string, string[]>;
 }
 
-const TaskCard = ({task}: Props) => {
+const TaskCard = ({task, highlights}: Props) => {
   return (
     <div className='mb-3 rounded bg-white p-4 shadow dark:bg-dark-secondary dark:text-white'>
         {task.attachments && task.attachments.length>0 && (
@@ -33,11 +35,11 @@ const TaskCard = ({task}: Props) => {
         </p>
 
          <p>
-            <strong>Title:</strong>{task.title}
+            <strong>Title:</strong><Highlight text={highlights?.title?.[0]} fallback={task.title}/>
         </p>
 
          <p>
-            <strong>Description:</strong>{" "}{task.description || "No Description Provided"}
+            <strong>Description:</strong>{" "}<Highlight text={highlights?.description?.[0]} fallback={task.description || "No Description Provided"}/>
         </p>
 
 

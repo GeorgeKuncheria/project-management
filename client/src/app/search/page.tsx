@@ -45,7 +45,7 @@ function Search() {
                         )}
 
                         {searchResults?.tasks?.map((task)=>(
-                            <TaskCard key={task.id} task={task}/> 
+                            <TaskCard key={task.id} task={task} highlights={searchResults.highlights?.tasks?.[task.id]}/> 
                         ))}
 
                         {searchResults.projects && searchResults.projects?.length > 0 && (
@@ -53,7 +53,7 @@ function Search() {
                         )}
 
                         {searchResults?.projects?.map((project)=>(
-                            <ProjectCard key={project.id} project={project}/> 
+                            <ProjectCard key={project.id} project={project} highlights={searchResults.highlights?.projects?.[project.id]}/> 
                         ))}
                                                 
                         {searchResults.users && searchResults.users?.length > 0 && (

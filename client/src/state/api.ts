@@ -67,6 +67,11 @@ export interface SearchResults{
     tasks?: Task[];
     projects?: Project[];
     users?: User[];
+    // Elasticsearch highlights keyed by record id, then field; matches wrapped in [[hl]]…[[/hl]].
+    highlights?: {
+        tasks?: Record<string, Record<string, string[]>>;
+        projects?: Record<string, Record<string, string[]>>;
+    };
 }
 
 

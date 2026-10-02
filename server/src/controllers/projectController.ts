@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import { PrismaClient } from '../../generated/prisma';
+import { indexProject, safeIndex } from '../search/indexer';
 
 const prisma = new PrismaClient();
 
@@ -25,6 +26,7 @@ export const createProject = async (req: Request, res: Response): Promise<void> 
                 endDate
             }
         })
+        safeIndex(() => indexProject(newProject.id));
  
         res.status(200).json(newProject);
     

@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import { PrismaClient } from '../../generated/prisma';
+import { indexTask, safeIndex } from '../search/indexer';
 
 const prisma = new PrismaClient();
 
@@ -45,6 +46,7 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
                 assignedUserId
             }
         })
+        safeIndex(() => indexTask(newTask.id));
  
         res.status(200).json(newTask);
     
@@ -68,6 +70,7 @@ export const updateTaskStatus = async (req: Request, res: Response): Promise<voi
                 status
             }
         });
+        safeIndex(() => indexTask(updatedTask.id));
 
         res.status(200).json(updatedTask);
     } catch (error:any) {

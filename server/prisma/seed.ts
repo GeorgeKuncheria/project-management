@@ -1,6 +1,10 @@
 import { PrismaClient } from "../generated/prisma";
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+import { recreateIndices } from "../src/search/indices";
+import { indexAll } from "../src/search/indexer";
+dotenv.config();
 const prisma = new PrismaClient();
 
 async function deleteAllData(orderedFileNames: string[]) {
@@ -53,6 +57,17 @@ async function main() {
   }
 }
 
+// Keep Elasticsearch in step with the freshly seeded data (best effort).
+async function reindexSearch() {
+  try {
+    await recreateIndices();
+    console.log("Reindexed Elasticsearch:", await indexAll());
+  } catch (e: any) {
+    console.warn(`Skipped Elasticsearch reindex: ${e.message}`);
+  }
+}
+
 main()
+  .then(reindexSearch)
   .catch((e) => console.error(e))
   .finally(async () => await prisma.$disconnect());

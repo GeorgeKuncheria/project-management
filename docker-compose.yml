@@ -1,0 +1,15 @@
+# Local Elasticsearch for development. Production should use a managed cluster
+# (Amazon OpenSearch Service / Elastic Cloud) — see ELASTICSEARCH_URL in server/.env.
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.2
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+volumes:
+  esdata:

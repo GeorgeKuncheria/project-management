@@ -141,3 +141,26 @@
   ```
   pm2 monit
   ```
+
+## Elasticsearch (search)
+
+Search uses Elasticsearch with an automatic Postgres fallback, so the server runs fine without it.
+Don't run Elasticsearch on the same small EC2 instance — use a managed cluster
+(Amazon OpenSearch Service, or Elastic Cloud).
+
+1. Provision the cluster and allow inbound access only from the EC2 instance's security group.
+2. Add to `server/.env` on the instance:
+
+   ```
+   ELASTICSEARCH_URL=https://<your-cluster-endpoint>
+   ELASTICSEARCH_API_KEY=<api-key>
+   ```
+
+3. Build the indices once, then restart:
+
+   ```
+   npm run reindex
+   pm2 restart project-management
+   ```
+
+If the index ever drifts from Postgres (an index call failed, data edited directly), re-run `npm run reindex`.

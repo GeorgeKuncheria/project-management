@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"rimraf dist && npx tsc",
-    "start":"npm run build && node dist/index.ts",
-    "dev":"npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\" ",
-    "seed": "ts-node prisma/seed.ts"
+    "build": "rimraf dist && npx tsc",
+    "start": "npm run build && node dist/index.ts",
+    "dev": "npm run build && concurrently \"npx tsc -w\" \"nodemon --exec ts-node src/index.ts\" ",
+    "seed": "ts-node prisma/seed.ts",
+    "reindex": "ts-node src/search/reindex.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.19.2",
     "@prisma/client": "^6.12.0",
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
